@@ -8,6 +8,7 @@ import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
 
+//ClientCredentials calls do not include a previewUrl most of the time for some reason
 public class ClientCredentialsSpotify {
     private static final String clientId = "afad9457fdfb4692a7e012c0707529e0";
     private static final String clientSecret = "2e541128422845aea94dc5c64a20046a";
