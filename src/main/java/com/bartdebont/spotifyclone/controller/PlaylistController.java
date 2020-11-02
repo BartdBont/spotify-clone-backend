@@ -3,6 +3,7 @@ package com.bartdebont.spotifyclone.controller;
 import com.bartdebont.spotifyclone.model.Playlist;
 import com.bartdebont.spotifyclone.service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +28,9 @@ public class PlaylistController {
     }
 
     @PostMapping("playlists")
-    public ResponseEntity<Playlist> createPlaylist(@RequestBody Playlist playlist) {
-        return ResponseEntity.ok(playlistService.createPlaylist(playlist));
+    public ResponseEntity<Object> createPlaylist(@RequestBody Playlist playlist) {
+        playlistService.createPlaylist(playlist);
+        return new ResponseEntity<>("Playlist is created successfully", HttpStatus.CREATED);
     }
 
     @GetMapping("playlists/{id}")

@@ -40,7 +40,8 @@ public class PlaylistService {
     }
 
     public Map<String, Boolean> deletePlaylist(Long id) {
-        playlistRepository.deleteById(id);
+        Playlist playlistToDelete = getPlaylist(id);
+        playlistRepository.delete(playlistToDelete);
         Map<String, Boolean> result = new HashMap<>();
         result.put("deleted", true);
         return result;

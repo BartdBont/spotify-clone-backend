@@ -11,7 +11,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String display_name;
+    private String username;
 
     private String email;
 
@@ -22,8 +22,8 @@ public class Customer {
     @OneToMany(mappedBy = "owner", orphanRemoval = true)
     private List<Playlist> playlists;
 
-    public Customer(String display_name, String email, String password, File image, List<Playlist> playlists) {
-        this.display_name = display_name;
+    public Customer(String username, String email, String password, File image, List<Playlist> playlists) {
+        this.username = username;
         this.email = email;
         this.password = password;
         this.image = image;
@@ -37,16 +37,12 @@ public class Customer {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getUsername() {
+        return username;
     }
 
-    public String getDisplay_name() {
-        return display_name;
-    }
-
-    public void setDisplay_name(String display_name) {
-        this.display_name = display_name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
