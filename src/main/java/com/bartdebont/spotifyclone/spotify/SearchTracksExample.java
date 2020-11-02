@@ -10,15 +10,13 @@ import org.apache.hc.core5.http.ParseException;
 import java.io.IOException;
 
 public class SearchTracksExample {
-    private static final String q = "Abba";
 
     private static final SpotifyApi spotifyApi = ClientCredentialsSpotify.clientCredentials_Sync();
 
-    private static final SearchTracksRequest searchTracksRequest = spotifyApi.searchTracks(q)
-            .build();
-
-    private static void searchTracks_Sync() {
+    private static void searchTracks_Sync(String q) {
         try {
+            SearchTracksRequest searchTracksRequest = spotifyApi.searchTracks(q)
+                    .build();
             final Paging<Track> trackPaging = searchTracksRequest.execute();
 
             System.out.println("Total: " + trackPaging.toString());
@@ -28,6 +26,6 @@ public class SearchTracksExample {
     }
 
     public static void main(String[] args) {
-        searchTracks_Sync();
+        searchTracks_Sync("Abba");
     }
 }

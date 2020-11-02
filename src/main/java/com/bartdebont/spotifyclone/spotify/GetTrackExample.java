@@ -1,5 +1,6 @@
 package com.bartdebont.spotifyclone.spotify;
 
+import com.neovisionaries.i18n.CountryCode;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.specification.Paging;
@@ -11,15 +12,13 @@ import org.apache.hc.core5.http.ParseException;
 import java.io.IOException;
 
 public class GetTrackExample {
-    private static final String id = "01iyCAUm8EvOFqVWYJ3dVX";
+    private static final String id = "2WC4sK0ryyysQhtDok9Ytr";
 
     private static final SpotifyApi spotifyApi = ClientCredentialsSpotify.clientCredentials_Sync();
 
-    private static final GetTrackRequest getTrackRequest = spotifyApi.getTrack(id)
-            .build();
-
-    private static void getTrack_Sync() {
+    private static void getTrack_Sync(String id) {
         try {
+            GetTrackRequest getTrackRequest = spotifyApi.getTrack(id).market(CountryCode.NL).build();
             final Track track = getTrackRequest.execute();
 
             System.out.println("Total: " + track.toString());
@@ -29,6 +28,6 @@ public class GetTrackExample {
     }
 
     public static void main(String[] args) {
-        getTrack_Sync();
+        getTrack_Sync(id);
     }
 }
