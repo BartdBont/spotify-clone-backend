@@ -12,6 +12,8 @@ public class Playlist {
 
     private String name;
 
+    private String description;
+
     @ManyToOne
     private Customer owner;
 
@@ -20,14 +22,23 @@ public class Playlist {
     @ManyToMany
     private List<Song> songs;
 
-    public Playlist(String name, Customer owner, Boolean visible, List<Song> songs) {
+    public Playlist(String name, String description, Customer owner, Boolean visible, List<Song> songs) {
         this.name = name;
+        this.description = description;
         this.owner = owner;
         this.visible = visible;
         this.songs = songs;
     }
 
     public Playlist() {
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Long getId() {

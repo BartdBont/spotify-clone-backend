@@ -11,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/spotify/v1/")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class PlaylistController {
 
     private final PlaylistService playlistService;
