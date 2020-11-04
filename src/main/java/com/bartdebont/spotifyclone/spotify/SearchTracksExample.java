@@ -13,15 +13,17 @@ public class SearchTracksExample {
 
     private static final SpotifyApi spotifyApi = ClientCredentialsSpotify.clientCredentials_Sync();
 
-    private static void searchTracks_Sync(String q) {
+    private static Track[] searchTracks_Sync(String q) {
         try {
             SearchTracksRequest searchTracksRequest = spotifyApi.searchTracks(q)
                     .build();
             final Paging<Track> trackPaging = searchTracksRequest.execute();
 
             System.out.println("Total: " + trackPaging.toString());
+            return trackPaging.getItems();
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
+            return null;
         }
     }
 

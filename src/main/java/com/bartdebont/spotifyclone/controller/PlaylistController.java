@@ -1,5 +1,6 @@
 package com.bartdebont.spotifyclone.controller;
 
+import com.bartdebont.spotifyclone.exception.ResourceNotFoundException;
 import com.bartdebont.spotifyclone.model.Playlist;
 import com.bartdebont.spotifyclone.service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,12 @@ public class PlaylistController {
     }
 
     @GetMapping("playlists/{id}")
-    public ResponseEntity<Playlist> getPlaylistById(@PathVariable Long id) {
-        return ResponseEntity.ok(playlistService.getPlaylist(id));
+    public ResponseEntity<Object> getPlaylistById(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(playlistService.getPlaylist(id));
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @PutMapping("playlists/{id}")

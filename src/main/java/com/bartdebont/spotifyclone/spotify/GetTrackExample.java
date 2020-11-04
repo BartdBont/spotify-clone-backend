@@ -12,7 +12,6 @@ import org.apache.hc.core5.http.ParseException;
 import java.io.IOException;
 
 public class GetTrackExample {
-    private static final String id = "2WC4sK0ryyysQhtDok9Ytr";
 
     private static final SpotifyApi spotifyApi = ClientCredentialsSpotify.clientCredentials_Sync();
 
@@ -28,6 +27,6 @@ public class GetTrackExample {
     }
 
     public static void main(String[] args) {
-        getTrack_Sync(id);
+        getTrack_Sync("2WC4sK0ryyysQhtDok9Ytr");
     }
 }

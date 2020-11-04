@@ -27,7 +27,7 @@ public class PlaylistService {
 
     public Playlist getPlaylist(Long id) throws ResourceNotFoundException {
         return playlistRepository.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException(String.format("Playlist with id: %2 could not be found", id)));
+                new ResourceNotFoundException(String.format("Playlist with id: %o could not be found", id)));
     }
 
     public List<Playlist> getPlaylists() {
