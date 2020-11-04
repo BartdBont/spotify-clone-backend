@@ -3,6 +3,7 @@ package com.bartdebont.spotifyclone.controller;
 import com.bartdebont.spotifyclone.exception.ResourceNotFoundException;
 import com.bartdebont.spotifyclone.model.Playlist;
 import com.bartdebont.spotifyclone.service.PlaylistService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,17 +25,20 @@ public class PlaylistController {
     }
 
     @GetMapping("playlists")
+    @ApiOperation(value = "Gets all playlists")
     public ResponseEntity<List<Playlist>> getPlaylists() {
         return ResponseEntity.ok(playlistService.getPlaylists());
     }
 
     @PostMapping("playlists")
+    @ApiOperation(value = "Creates an empty playlist")
     public ResponseEntity<Object> createPlaylist(@RequestBody Playlist playlist) {
         playlistService.createPlaylist(playlist);
         return new ResponseEntity<>("Playlist is created successfully", HttpStatus.CREATED);
     }
 
     @GetMapping("playlists/{id}")
+    @ApiOperation(value = "Gets a playlist by id", notes = "Provide an id to look up specific playlists")
     public ResponseEntity<Object> getPlaylistById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(playlistService.getPlaylist(id));
@@ -44,11 +48,13 @@ public class PlaylistController {
     }
 
     @PutMapping("playlists/{id}")
+    @ApiOperation(value = "Edits the content/details of a playlist by id", notes = "Provide an id to edit a specific playlist")
     public ResponseEntity<Playlist> updatePlaylist(@PathVariable Long id, @RequestBody Playlist playlist) {
         return ResponseEntity.ok(playlistService.updatePlaylist(id, playlist));
     }
 
     @DeleteMapping("playlists/{id}")
+    @ApiOperation(value = "Deletes a playlist by id", notes = "Provide an id to delete a specific playlist")
     public ResponseEntity<Map<String, Boolean>> deletePlaylist(@PathVariable Long id) {
         return ResponseEntity.ok(playlistService.deletePlaylist(id));
     }
