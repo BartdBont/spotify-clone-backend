@@ -13,6 +13,7 @@ public class Song {
     private String name;
 
     private int duration_ms;
+    private String previewUrl;
 
     @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
     private Album album;
@@ -20,14 +21,23 @@ public class Song {
     @ManyToMany
     private List<Artist> artists;
 
-    public Song(String name, int duration_ms, Album album, List<Artist> artists) {
+    public Song(String name, int duration_ms, String previewUrl, Album album, List<Artist> artists) {
         this.name = name;
         this.duration_ms = duration_ms;
+        this.previewUrl = previewUrl;
         this.album = album;
         this.artists = artists;
     }
 
     public Song() {
+    }
+
+    public String getPreviewUrl() {
+        return previewUrl;
+    }
+
+    public void setPreviewUrl(String previewUrl) {
+        this.previewUrl = previewUrl;
     }
 
     public Long getId() {

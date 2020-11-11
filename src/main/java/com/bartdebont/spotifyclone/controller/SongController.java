@@ -35,4 +35,9 @@ public class SongController {
     public ResponseEntity<List<Song>> getSongs() {
         return ResponseEntity.ok(songService.getSongs());
     }
+
+    @GetMapping(value = "songs", params = "name")
+    public ResponseEntity<List<Song>> getSongsByName(String name) {
+        return ResponseEntity.ok(songService.getSongsByName(name));
+    }
 }

@@ -17,11 +17,6 @@ import java.util.Collections;
 @EnableSwagger2
 public class SpotifyCloneApplication {
 
-//    @Bean
-//    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-
     public static void main(String[] args) {
         ClientCredentialsSpotify clientCredentialsSpotify = new ClientCredentialsSpotify();
         clientCredentialsSpotify.clientCredentials_Sync();
