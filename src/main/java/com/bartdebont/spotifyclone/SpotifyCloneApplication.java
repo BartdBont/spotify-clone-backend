@@ -23,8 +23,8 @@ public class SpotifyCloneApplication {
 //    }
 
     public static void main(String[] args) {
-        ClientCredentialsSpotify clientCredentialsSpotify = new ClientCredentialsSpotify();
-        clientCredentialsSpotify.clientCredentials_Sync();
+//        ClientCredentialsSpotify clientCredentialsSpotify = new ClientCredentialsSpotify();
+//        clientCredentialsSpotify.clientCredentials_Sync();
         SpringApplication.run(SpotifyCloneApplication.class, args);
     }
 

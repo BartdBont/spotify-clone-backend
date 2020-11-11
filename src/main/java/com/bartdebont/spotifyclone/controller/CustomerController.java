@@ -47,11 +47,9 @@ public class CustomerController {
     @PostMapping("/register")
     public ResponseEntity<Customer> registerCustomer(@RequestBody RegisterRequest registerRequest) throws Exception {
         Customer customer;
-        try {
+
              customer = customerService.registerNewCustomer(registerRequest);
-        } catch (Exception e) {
-            return null;
-        }
+
         return ResponseEntity.ok(customer);
     }
 }
