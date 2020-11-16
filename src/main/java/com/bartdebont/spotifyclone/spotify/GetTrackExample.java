@@ -20,7 +20,6 @@ public class GetTrackExample {
             GetTrackRequest getTrackRequest = spotifyApi.getTrack(id).market(CountryCode.NL).build();
             final Track track = getTrackRequest.execute();
 
-            System.out.println("Total: " + track.toString());
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
         }

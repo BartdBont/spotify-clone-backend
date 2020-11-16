@@ -46,11 +46,12 @@ public class SongService {
     public List<Song> getSongsByName(String name) {
         List<Song> songs = new ArrayList<>();
         Track[] result = SearchTracksExample.searchTracks_Sync(name);
-        System.out.println(result.toString());
-        for (Track track:
-             result) {
-            Song song = TrackToSongConverter.ConvertTrackToSong(track);
-            songs.add(song);
+        if (result != null) {
+            for (Track track:
+                    result) {
+                Song song = TrackToSongConverter.ConvertTrackToSong(track);
+                songs.add(song);
+            }
         }
         return songs;
     }

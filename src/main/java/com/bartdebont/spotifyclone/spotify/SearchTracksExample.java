@@ -21,7 +21,6 @@ public class SearchTracksExample {
                     .build();
             final Paging<Track> trackPaging = searchTracksRequest.execute();
 
-            System.out.println("Total: " + trackPaging.toString());
             return trackPaging.getItems();
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
@@ -33,7 +32,6 @@ public class SearchTracksExample {
         try {
             final Artist artist = spotifyApi.getArtist(id).build().execute();
 
-            System.out.println("Name: " + artist.getName());
             return artist;
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
