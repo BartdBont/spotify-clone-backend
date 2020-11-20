@@ -34,6 +34,10 @@ public class SongService {
         return songRepository.save(song);
     }
 
+    public Song saveSpotifySong(Track track) {
+        return songRepository.save(TrackToSongConverter.ConvertTrackToSong(track));
+    }
+
     public List<Song> getSongs() {
         List<Song> songs = new ArrayList<>();
         for (Song song:
@@ -49,6 +53,7 @@ public class SongService {
         if (result != null) {
             for (Track track:
                     result) {
+                System.out.println(track.toString());
                 Song song = TrackToSongConverter.ConvertTrackToSong(track);
                 songs.add(song);
             }

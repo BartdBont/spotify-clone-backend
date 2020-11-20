@@ -2,6 +2,7 @@ package com.bartdebont.spotifyclone.controller;
 
 import com.bartdebont.spotifyclone.exception.ResourceNotFoundException;
 import com.bartdebont.spotifyclone.model.Playlist;
+import com.bartdebont.spotifyclone.model.Song;
 import com.bartdebont.spotifyclone.service.PlaylistService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,4 +59,15 @@ public class PlaylistController {
     public ResponseEntity<Map<String, Boolean>> deletePlaylist(@PathVariable Long id) {
         return ResponseEntity.ok(playlistService.deletePlaylist(id));
     }
+
+    @PostMapping("playlists/{id}/songs")
+    public ResponseEntity<Playlist> addSongToPlaylist(@PathVariable Long playlistId, @RequestBody Song song) {
+        return ResponseEntity.ok(playlistService.addSongToPlaylist(playlistId, song));
+    }
+
+    @DeleteMapping("playlists/{id}/songs")
+    public ResponseEntity<Boolean> deleteSongFromPlaylist(@PathVariable Long playlistId, @RequestBody Song song) {
+        return ResponseEntity.ok(playlistService.deleteSongFromPlaylist(playlistId, song));
+    }
+
 }

@@ -2,6 +2,7 @@ package com.bartdebont.spotifyclone.service;
 
 import com.bartdebont.spotifyclone.exception.ResourceNotFoundException;
 import com.bartdebont.spotifyclone.model.Playlist;
+import com.bartdebont.spotifyclone.model.Song;
 import com.bartdebont.spotifyclone.repository.PlaylistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,5 +59,32 @@ public class PlaylistService {
         Playlist updatedPlaylist = playlistRepository.save(playlist);
 
         return updatedPlaylist;
+    }
+
+    public Playlist addSongToPlaylist(Long playlistId, Song song) {
+        Playlist playlist = getPlaylist(playlistId);
+        List<Song> currentSongs;
+
+        if (!playlist.getSongs().isEmpty()){
+            currentSongs = playlist.getSongs();
+        } else {
+            currentSongs = new ArrayList<>();
+        }
+
+        currentSongs.add(song);
+        playlist.setSongs(currentSongs);
+
+        return playlistRepository.save(playlist);
+    }
+
+    public Boolean deleteSongFromPlaylist(Long playlistId, Song song) {
+        Playlist playlist = getPlaylist(playlistId);
+
+        if (playlist.getSongs().contains(song)){
+            playlist.getSongs().remove(song);
+            playlistRepository.save(playlist);
+            return true;
+        }
+        return false;
     }
 }

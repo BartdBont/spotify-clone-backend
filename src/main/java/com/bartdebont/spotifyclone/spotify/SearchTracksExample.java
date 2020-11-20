@@ -1,5 +1,6 @@
 package com.bartdebont.spotifyclone.spotify;
 
+import com.bartdebont.spotifyclone.util.SpotifyTokenUtil;
 import com.neovisionaries.i18n.CountryCode;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
@@ -24,6 +25,7 @@ public class SearchTracksExample {
             return trackPaging.getItems();
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
+            SpotifyTokenUtil.checkIfTokenExpired(e);
             return null;
         }
     }
@@ -35,11 +37,8 @@ public class SearchTracksExample {
             return artist;
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
+            SpotifyTokenUtil.checkIfTokenExpired(e);
             return null;
         }
-    }
-
-    public static void main(String[] args) {
-        searchTracks_Sync("Abba");
     }
 }

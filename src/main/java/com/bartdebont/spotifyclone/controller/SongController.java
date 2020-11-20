@@ -3,6 +3,7 @@ package com.bartdebont.spotifyclone.controller;
 import com.bartdebont.spotifyclone.exception.ResourceNotFoundException;
 import com.bartdebont.spotifyclone.model.Song;
 import com.bartdebont.spotifyclone.service.SongService;
+import com.wrapper.spotify.model_objects.specification.Track;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,5 +40,10 @@ public class SongController {
     @GetMapping(value = "songs", params = "name")
     public ResponseEntity<List<Song>> getSongsByName(String name) {
         return ResponseEntity.ok(songService.getSongsByName(name));
+    }
+
+    @PostMapping("tracks")
+    public Song saveSpotifyTrack(@RequestBody Track track) {
+        return songService.saveSpotifySong(track);
     }
 }

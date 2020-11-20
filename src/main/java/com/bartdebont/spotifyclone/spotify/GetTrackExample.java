@@ -1,5 +1,6 @@
 package com.bartdebont.spotifyclone.spotify;
 
+import com.bartdebont.spotifyclone.util.SpotifyTokenUtil;
 import com.neovisionaries.i18n.CountryCode;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
@@ -22,10 +23,7 @@ public class GetTrackExample {
 
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
+            SpotifyTokenUtil.checkIfTokenExpired(e);
         }
-    }
-
-    public static void main(String[] args) {
-        getTrack_Sync("2WC4sK0ryyysQhtDok9Ytr");
     }
 }
