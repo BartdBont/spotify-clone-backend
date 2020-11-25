@@ -20,5 +20,19 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.15
+    - name: Setup PostgreSQL
+      uses: Harmon758/postgresql-action@v1.0.0
+      with:
+        # Version of PostgreSQL to use
+        postgresql version: default
+        # POSTGRES_DB - name for the default database that is created
+        postgresql db: spotify-clone
+        # POSTGRES_USER - create the specified user with superuser power
+        postgresql user: postgres
+        # POSTGRES_PASSWORD - superuser password
+        postgresql password: 5011
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+      env:
+        POSTGRES_HOST: localhost
+        POSTGRES_PORT: 5432
