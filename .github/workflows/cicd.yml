@@ -22,7 +22,7 @@ jobs:
         # Provide the password for postgres
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: 5011
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: spotify-clone
         # Set health checks to wait until postgres has started
         options: >-
@@ -45,3 +45,11 @@ jobs:
       env:
         POSTGRES_HOST: localhost
         POSTGRES_PORT: 5432
+
+    - name: Build and Push Docker Image
+    - uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image: bartofzo013/spotify-clone
+        registry: docker.io
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
