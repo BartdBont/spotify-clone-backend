@@ -47,7 +47,7 @@ jobs:
         POSTGRES_PORT: 5432
 
     - name: Build and Push Docker Image
-    - uses: mr-smithers-excellent/docker-build-push@v5
+      uses: mr-smithers-excellent/docker-build-push@v5
       with:
         image: bartofzo013/spotify-clone
         registry: docker.io
