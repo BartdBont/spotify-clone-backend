@@ -6,6 +6,6 @@ COPY src /workspace/src
 RUN mvn -B package --file pom.xml -DskipTests
 
 FROM openjdk:15-slim
-COPY --from=build /workspace/target/spotify-backend-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /workspace/target/spotify-backend-0.0.1.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","app.jar"]
