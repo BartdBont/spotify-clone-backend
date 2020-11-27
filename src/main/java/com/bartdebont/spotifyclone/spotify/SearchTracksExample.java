@@ -18,7 +18,7 @@ public class SearchTracksExample {
 
     public static Track[] searchTracks_Sync(String q) {
         try {
-            SearchTracksRequest searchTracksRequest = spotifyApi.searchTracks(q).market(CountryCode.US)
+            SearchTracksRequest searchTracksRequest = spotifyApi.searchTracks(q).limit(50).market(CountryCode.US)
                     .build();
             final Paging<Track> trackPaging = searchTracksRequest.execute();
 

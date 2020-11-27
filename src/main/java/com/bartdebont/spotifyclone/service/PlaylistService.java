@@ -4,6 +4,7 @@ import com.bartdebont.spotifyclone.exception.ResourceNotFoundException;
 import com.bartdebont.spotifyclone.model.Playlist;
 import com.bartdebont.spotifyclone.model.Song;
 import com.bartdebont.spotifyclone.repository.PlaylistRepository;
+import com.bartdebont.spotifyclone.util.YoutubeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,15 +12,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class PlaylistService {
 
     private final PlaylistRepository playlistRepository;
 
+    private final SongService songService;
+
     @Autowired
-    public PlaylistService(PlaylistRepository playlistRepository) {
+    public PlaylistService(PlaylistRepository playlistRepository, SongService songService) {
         this.playlistRepository = playlistRepository;
+        this.songService = songService;
     }
 
     public Playlist createPlaylist(Playlist playlist) {
@@ -71,17 +77,41 @@ public class PlaylistService {
             currentSongs = new ArrayList<>();
         }
 
-        currentSongs.add(song);
+        Song newSong = hasSongBeenSavedBefore(song);
+
+        currentSongs.add(newSong);
         playlist.setSongs(currentSongs);
 
         return playlistRepository.save(playlist);
     }
 
+    private Song hasSongBeenSavedBefore(Song song) {
+        //checks if song has been saved
+        Song songFromDb = songService.hasSongBeenSaved(song.getSpotifyId());
+        Song newSong = new Song();
+        if (songFromDb == null) {
+            newSong = songService.addSong(song);
+        } else {
+            newSong = song;
+        }
+        return newSong;
+    }
+
     public Boolean deleteSongFromPlaylist(Long playlistId, Song song) {
         Playlist playlist = getPlaylist(playlistId);
 
-        if (playlist.getSongs().contains(song)){
-            playlist.getSongs().remove(song);
+        //splits the lists into two
+        List<Song> songsWithoutSpotifyId = playlist.getSongs().stream().filter(o -> o.getSpotifyId()==null).collect(Collectors.toList());
+        List<Song> songsWithSpotifyId = playlist.getSongs().stream().filter(o -> o.getSpotifyId()!=null).collect(Collectors.toList());
+
+        playlist.setSongs(null);
+
+        //deletes song from playlists where spotifyId matches
+        if (songsWithSpotifyId.stream().filter(o -> o.getSpotifyId().equals(song.getSpotifyId())).findFirst().isPresent()){
+            songsWithSpotifyId.removeIf(o -> o.getSpotifyId().equals(song.getSpotifyId()));
+
+            //merges the 2 lists back into 1 and saves
+            playlist.setSongs(Stream.concat(songsWithoutSpotifyId.stream(), songsWithSpotifyId.stream()).collect(Collectors.toList()));
             playlistRepository.save(playlist);
             return true;
         }

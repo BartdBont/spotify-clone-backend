@@ -61,13 +61,13 @@ public class PlaylistController {
     }
 
     @PostMapping("playlists/{id}/songs")
-    public ResponseEntity<Playlist> addSongToPlaylist(@PathVariable Long playlistId, @RequestBody Song song) {
-        return ResponseEntity.ok(playlistService.addSongToPlaylist(playlistId, song));
+    public ResponseEntity<Playlist> addSongToPlaylist(@PathVariable Long id, @RequestBody Song song) {
+        return ResponseEntity.ok(playlistService.addSongToPlaylist(id, song));
     }
 
     @DeleteMapping("playlists/{id}/songs")
-    public ResponseEntity<Boolean> deleteSongFromPlaylist(@PathVariable Long playlistId, @RequestBody Song song) {
-        return ResponseEntity.ok(playlistService.deleteSongFromPlaylist(playlistId, song));
+    public ResponseEntity<Boolean> deleteSongFromPlaylist(@PathVariable Long id, @RequestBody Song song) {
+        return ResponseEntity.ok(playlistService.deleteSongFromPlaylist(id, song));
     }
 
 }

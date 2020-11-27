@@ -4,6 +4,7 @@ import com.bartdebont.spotifyclone.exception.ResourceNotFoundException;
 import com.bartdebont.spotifyclone.model.Song;
 import com.bartdebont.spotifyclone.repository.SongRepository;
 import com.bartdebont.spotifyclone.spotify.SearchTracksExample;
+import com.bartdebont.spotifyclone.util.YoutubeUtil;
 import com.bartdebont.spotifyclone.util.converters.TrackToSongConverter;
 import com.wrapper.spotify.model_objects.specification.Track;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,29 @@ public class SongService {
             }
         }
         return songs;
+    }
+
+    public boolean doesSongHaveYoutubeId(String youtubeId) {
+        if (songRepository.findByYoutubeId(youtubeId) == null) return false;
+        return true;
+    }
+
+    public Song hasSongBeenSaved(String spotifyId) {
+        return songRepository.findBySpotifyId(spotifyId);
+    }
+
+    public String getYoutubeId(Song song) {
+        try {
+            if (doesSongHaveYoutubeId(song.getYoutubeId())) {
+                return songRepository.findByYoutubeId(song.getYoutubeId()).getYoutubeId();
+            }
+            String youtubeId = YoutubeUtil.getYoutubeId(song.getIsrc());
+            if (youtubeId == null) {
+                return YoutubeUtil.getYoutubeId(song.getName() + " " + song.getArtist());
+            }
+            return youtubeId;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
