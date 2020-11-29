@@ -50,7 +50,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: application-package
-        path: /**/spotify-clone-0.0.1-SNAPSHOT.jar
+        path: /**/target/spotify-clone-0.0.1-SNAPSHOT.jar
 
     - name: download application package
       uses: actions/download-artifact@v2
