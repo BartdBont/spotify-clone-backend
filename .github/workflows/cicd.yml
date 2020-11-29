@@ -46,6 +46,17 @@ jobs:
         POSTGRES_HOST: localhost
         POSTGRES_PORT: 5432
 
+    - name: upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: application-package
+        path: /workspace/target/spotify-clone-0.0.1-SNAPSHOT.jar
+
+    - name: download application package
+      uses: actions/download-artifact@v2
+      with:
+        name: application-package
+
     - name: Build and Push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
