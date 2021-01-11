@@ -1,6 +1,7 @@
 package com.bartdebont.spotifyclone.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
@@ -13,7 +14,7 @@ public class Album {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Artist> artists;
 
     private String image;

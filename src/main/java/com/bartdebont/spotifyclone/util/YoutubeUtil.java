@@ -24,7 +24,7 @@ public class YoutubeUtil {
         String get = MessageFormat.format("https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults={0}&q={1}&type=video&key={2}",
                 MAX_RESULTS,
                 search,
-                API_KEY).replaceAll(" ", "%20");;
+                API_KEY).replaceAll(" ", "%20");
 
         HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(get))

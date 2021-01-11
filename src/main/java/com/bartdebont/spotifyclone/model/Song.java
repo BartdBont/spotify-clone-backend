@@ -22,7 +22,7 @@ public class Song {
     @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
     private Album album;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Artist> artists;
 
     public Song() {
@@ -34,7 +34,7 @@ public class Song {
         this.previewUrl = previewUrl;
         this.album = album;
         this.artists = artists;
-        this.youtubeId = spotifyId;
+        this.spotifyId = spotifyId;
         this.isrc = isrc;
     }
 

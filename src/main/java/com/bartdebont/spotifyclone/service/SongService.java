@@ -1,6 +1,8 @@
 package com.bartdebont.spotifyclone.service;
 
 import com.bartdebont.spotifyclone.exception.ResourceNotFoundException;
+import com.bartdebont.spotifyclone.model.Album;
+import com.bartdebont.spotifyclone.model.Artist;
 import com.bartdebont.spotifyclone.model.Song;
 import com.bartdebont.spotifyclone.repository.SongRepository;
 import com.bartdebont.spotifyclone.spotify.SearchTracksExample;
@@ -18,12 +20,9 @@ public class SongService {
 
     private final SongRepository songRepository;
 
-    private final SearchTracksExample searchTracksExample;
-
     @Autowired
     public SongService(SongRepository songRepository, SearchTracksExample searchTracksExample) {
         this.songRepository = songRepository;
-        this.searchTracksExample = searchTracksExample;
     }
 
     public Song getSong(Long id) throws ResourceNotFoundException {
