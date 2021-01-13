@@ -2,7 +2,6 @@ package com.bartdebont.spotifyclone.util.websocket;
 
 import com.bartdebont.spotifyclone.model.Customer;
 import com.bartdebont.spotifyclone.service.CustomerService;
-import com.bartdebont.spotifyclone.service.PlaylistService;
 import com.bartdebont.spotifyclone.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
