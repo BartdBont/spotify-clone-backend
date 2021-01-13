@@ -3,7 +3,6 @@ package com.bartdebont.spotifyclone.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.io.File;
 import java.util.List;
 
 @Entity
@@ -13,7 +12,7 @@ public class Album {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Artist> artists;
 
     private String image;

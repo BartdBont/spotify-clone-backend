@@ -14,9 +14,10 @@ import java.util.List;
 public class TrackToSongConverter {
 
     public static Song ConvertTrackToSong(Track track) {
+        System.out.println(track.getId());
         return new Song(track.getName(), track.getDurationMs(), track.getPreviewUrl(),
                 ConvertAlbumSimplifiedToAlbum(track.getAlbum()),
-                ConvertArtistsSimplifiedToArtists(track.getArtists()));
+                ConvertArtistsSimplifiedToArtists(track.getArtists()), track.getId(), track.getExternalIds().getExternalIds().get("isrc"));
     }
 
     public static Album ConvertAlbumSimplifiedToAlbum(AlbumSimplified albumSimplified) {
@@ -32,6 +33,10 @@ public class TrackToSongConverter {
             //converts to my artist object and adds to list
             if (artist.getGenres().length > 0 && artist.getImages().length > 0) {
                 artists.add(new Artist(artist.getGenres()[0], artist.getImages()[0].getUrl(), artist.getName()));
+            } else if (artist.getGenres().length > 0 && artist.getImages().length < 1){
+                artists.add(new Artist(artist.getGenres()[0], "none", artist.getName()));
+            } else if (artist.getGenres().length < 1 && artist.getImages().length > 0) {
+                artists.add(new Artist("none", artist.getImages()[0].getUrl(), artist.getName()));
             } else {
                 artists.add(new Artist("none", "none", artist.getName()));
             }

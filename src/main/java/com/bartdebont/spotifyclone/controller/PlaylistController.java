@@ -1,7 +1,10 @@
 package com.bartdebont.spotifyclone.controller;
 
 import com.bartdebont.spotifyclone.exception.ResourceNotFoundException;
+import com.bartdebont.spotifyclone.model.Customer;
 import com.bartdebont.spotifyclone.model.Playlist;
+import com.bartdebont.spotifyclone.model.Song;
+import com.bartdebont.spotifyclone.service.CustomerService;
 import com.bartdebont.spotifyclone.service.PlaylistService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -19,20 +23,26 @@ public class PlaylistController {
 
     private final PlaylistService playlistService;
 
+    private final CustomerService customerService;
+
     @Autowired
-    public PlaylistController(PlaylistService playlistService) {
+    public PlaylistController(PlaylistService playlistService, CustomerService customerService) {
         this.playlistService = playlistService;
+        this.customerService = customerService;
     }
 
     @GetMapping("playlists")
     @ApiOperation(value = "Gets all playlists")
-    public ResponseEntity<List<Playlist>> getPlaylists() {
-        return ResponseEntity.ok(playlistService.getPlaylists());
+    public ResponseEntity<List<Playlist>> getPlaylists(HttpServletRequest req) {
+        Customer owner = customerService.getUserFromHttp(req);
+        return ResponseEntity.ok(playlistService.getPlaylists(owner));
     }
 
     @PostMapping("playlists")
     @ApiOperation(value = "Creates an empty playlist")
-    public ResponseEntity<Object> createPlaylist(@RequestBody Playlist playlist) {
+    public ResponseEntity<Object> createPlaylist(@RequestBody Playlist playlist, HttpServletRequest req) {
+        Customer owner = customerService.getUserFromHttp(req);
+        playlist.setOwner(owner);
         playlistService.createPlaylist(playlist);
         return new ResponseEntity<>("Playlist is created successfully", HttpStatus.CREATED);
     }
@@ -58,4 +68,15 @@ public class PlaylistController {
     public ResponseEntity<Map<String, Boolean>> deletePlaylist(@PathVariable Long id) {
         return ResponseEntity.ok(playlistService.deletePlaylist(id));
     }
+
+    @PostMapping("playlists/{id}/songs")
+    public ResponseEntity<Playlist> addSongToPlaylist(@PathVariable Long id, @RequestBody Song song) {
+        return ResponseEntity.ok(playlistService.addSongToPlaylist(id, song));
+    }
+
+    @DeleteMapping("playlists/{id}/songs/{songId}")
+    public ResponseEntity<Boolean> deleteSongFromPlaylist(@PathVariable Long id, @PathVariable Long songId) {
+        return ResponseEntity.ok(playlistService.delSongFromPlaylist(id, songId));
+    }
+
 }

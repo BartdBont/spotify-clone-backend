@@ -4,6 +4,7 @@ import com.bartdebont.spotifyclone.exception.ResourceNotFoundException;
 import com.bartdebont.spotifyclone.model.Song;
 import com.bartdebont.spotifyclone.repository.SongRepository;
 import com.bartdebont.spotifyclone.spotify.SearchTracksExample;
+import com.bartdebont.spotifyclone.util.YoutubeUtil;
 import com.bartdebont.spotifyclone.util.converters.TrackToSongConverter;
 import com.wrapper.spotify.model_objects.specification.Track;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,9 @@ public class SongService {
 
     private final SongRepository songRepository;
 
-    private final SearchTracksExample searchTracksExample;
-
     @Autowired
     public SongService(SongRepository songRepository, SearchTracksExample searchTracksExample) {
         this.songRepository = songRepository;
-        this.searchTracksExample = searchTracksExample;
     }
 
     public Song getSong(Long id) throws ResourceNotFoundException {
@@ -32,6 +30,10 @@ public class SongService {
 
     public Song addSong(Song song) {
         return songRepository.save(song);
+    }
+
+    public Song saveSpotifySong(Track track) {
+        return songRepository.save(TrackToSongConverter.ConvertTrackToSong(track));
     }
 
     public List<Song> getSongs() {
@@ -46,12 +48,37 @@ public class SongService {
     public List<Song> getSongsByName(String name) {
         List<Song> songs = new ArrayList<>();
         Track[] result = SearchTracksExample.searchTracks_Sync(name);
-        System.out.println(result.toString());
-        for (Track track:
-             result) {
-            Song song = TrackToSongConverter.ConvertTrackToSong(track);
-            songs.add(song);
+        if (result != null) {
+            for (Track track:
+                    result) {
+                System.out.println(track.toString());
+                Song song = TrackToSongConverter.ConvertTrackToSong(track);
+                songs.add(song);
+            }
         }
         return songs;
+    }
+
+    public boolean doesSongHaveYoutubeId(String youtubeId) {
+        return songRepository.findByYoutubeId(youtubeId) != null;
+    }
+
+    public Song hasSongBeenSaved(String spotifyId) {
+        return songRepository.findBySpotifyId(spotifyId);
+    }
+
+    public String getYoutubeId(Song song) {
+        try {
+            if (doesSongHaveYoutubeId(song.getYoutubeId())) {
+                return songRepository.findByYoutubeId(song.getYoutubeId()).getYoutubeId();
+            }
+            String youtubeId = YoutubeUtil.getYoutubeId(song.getIsrc());
+            if (youtubeId == null) {
+                return YoutubeUtil.getYoutubeId(song.getName() + " " + song.getArtist());
+            }
+            return youtubeId;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

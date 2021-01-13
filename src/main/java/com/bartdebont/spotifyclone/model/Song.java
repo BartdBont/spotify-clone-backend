@@ -12,24 +12,41 @@ public class Song {
 
     private String name;
 
-    private int duration_ms;
+    private String spotifyId;
+    private String isrc;
+    private String youtubeId;
+
+    private Integer duration_ms;
     private String previewUrl;
 
     @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
     private Album album;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Artist> artists;
 
-    public Song(String name, int duration_ms, String previewUrl, Album album, List<Artist> artists) {
+    public Song() {
+    }
+
+    public Song(String name, int duration_ms, String previewUrl, Album album, List<Artist> artists, String spotifyId, String isrc) {
         this.name = name;
         this.duration_ms = duration_ms;
         this.previewUrl = previewUrl;
         this.album = album;
         this.artists = artists;
+        this.spotifyId = spotifyId;
+        this.isrc = isrc;
     }
 
-    public Song() {
+    public Song(String name, String spotifyId, String isrc, String youtubeId, int duration_ms, String previewUrl, Album album, List<Artist> artists) {
+        this.name = name;
+        this.spotifyId = spotifyId;
+        this.isrc = isrc;
+        this.youtubeId = youtubeId;
+        this.duration_ms = duration_ms;
+        this.previewUrl = previewUrl;
+        this.album = album;
+        this.artists = artists;
     }
 
     public String getPreviewUrl() {
@@ -38,6 +55,30 @@ public class Song {
 
     public void setPreviewUrl(String previewUrl) {
         this.previewUrl = previewUrl;
+    }
+
+    public String getSpotifyId() {
+        return spotifyId;
+    }
+
+    public void setSpotifyId(String spotifyId) {
+        this.spotifyId = spotifyId;
+    }
+
+    public String getIsrc() {
+        return isrc;
+    }
+
+    public void setIsrc(String isrc) {
+        this.isrc = isrc;
+    }
+
+    public String getYoutubeId() {
+        return youtubeId;
+    }
+
+    public void setYoutubeId(String youtubeId) {
+        this.youtubeId = youtubeId;
     }
 
     public Long getId() {

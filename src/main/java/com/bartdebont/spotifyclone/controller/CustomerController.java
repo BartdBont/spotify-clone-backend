@@ -13,8 +13,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
-@RequestMapping("/spotify/v1/")
+@RequestMapping("/spotify/v1/user")
 @CrossOrigin(origins = "*")
 public class CustomerController {
 
@@ -48,8 +50,14 @@ public class CustomerController {
     public ResponseEntity<Customer> registerCustomer(@RequestBody RegisterRequest registerRequest) throws Exception {
         Customer customer;
 
-             customer = customerService.registerNewCustomer(registerRequest);
+        customer = customerService.registerNewCustomer(registerRequest);
 
         return ResponseEntity.ok(customer);
+    }
+
+    @GetMapping()
+    public ResponseEntity<?> getUser(HttpServletRequest req) throws Exception {
+        Customer user = customerService.getUserFromHttp(req);
+        return ResponseEntity.ok(user);
     }
 }

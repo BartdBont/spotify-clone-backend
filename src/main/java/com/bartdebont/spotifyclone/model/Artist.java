@@ -13,6 +13,7 @@ public class Artist {
 
     private String genre;
 
+
     private String image;
 
     private String name;
