@@ -1,8 +1,6 @@
 package com.bartdebont.spotifyclone.model;
 
 import javax.persistence.*;
-import java.io.File;
-import java.util.List;
 
 @Entity
 public class Artist {

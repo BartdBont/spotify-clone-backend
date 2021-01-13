@@ -13,18 +13,18 @@ import java.util.List;
 
 public class TrackToSongConverter {
 
-    public static Song ConvertTrackToSong(Track track) {
+    public static Song convertTrackToSong(Track track) {
         System.out.println(track.getId());
         return new Song(track.getName(), track.getDurationMs(), track.getPreviewUrl(),
-                ConvertAlbumSimplifiedToAlbum(track.getAlbum()),
-                ConvertArtistsSimplifiedToArtists(track.getArtists()), track.getId(), track.getExternalIds().getExternalIds().get("isrc"));
+                convertAlbumSimplifiedToAlbum(track.getAlbum()),
+                convertArtistsSimplifiedToArtists(track.getArtists()), track.getId(), track.getExternalIds().getExternalIds().get("isrc"));
     }
 
-    public static Album ConvertAlbumSimplifiedToAlbum(AlbumSimplified albumSimplified) {
-        return new Album(ConvertArtistsSimplifiedToArtists(albumSimplified.getArtists()), albumSimplified.getImages()[0].getUrl(), albumSimplified.getName(), albumSimplified.getReleaseDate());
+    public static Album convertAlbumSimplifiedToAlbum(AlbumSimplified albumSimplified) {
+        return new Album(convertArtistsSimplifiedToArtists(albumSimplified.getArtists()), albumSimplified.getImages()[0].getUrl(), albumSimplified.getName(), albumSimplified.getReleaseDate());
     }
 
-    public static List<Artist> ConvertArtistsSimplifiedToArtists(ArtistSimplified[] artistsSimplified) {
+    public static List<Artist> convertArtistsSimplifiedToArtists(ArtistSimplified[] artistsSimplified) {
         List<Artist> artists = new ArrayList<>();
         for (ArtistSimplified item:
              artistsSimplified) {

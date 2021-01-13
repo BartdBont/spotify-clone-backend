@@ -33,7 +33,7 @@ public class SongService {
     }
 
     public Song saveSpotifySong(Track track) {
-        return songRepository.save(TrackToSongConverter.ConvertTrackToSong(track));
+        return songRepository.save(TrackToSongConverter.convertTrackToSong(track));
     }
 
     public List<Song> getSongs() {
@@ -52,7 +52,7 @@ public class SongService {
             for (Track track:
                     result) {
                 System.out.println(track.toString());
-                Song song = TrackToSongConverter.ConvertTrackToSong(track);
+                Song song = TrackToSongConverter.convertTrackToSong(track);
                 songs.add(song);
             }
         }

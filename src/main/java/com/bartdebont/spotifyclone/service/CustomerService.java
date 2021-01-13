@@ -55,8 +55,7 @@ public class CustomerService implements UserDetailsService {
     }
 
     private boolean emailExists(String email) {
-        if (customerRepository.findByEmail(email) == null) return false;
-        else return true;
+        return customerRepository.findByEmail(email) != null;
     }
 
     @Override

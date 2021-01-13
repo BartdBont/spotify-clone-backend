@@ -4,9 +4,7 @@ import com.bartdebont.spotifyclone.util.SpotifyTokenUtil;
 import com.neovisionaries.i18n.CountryCode;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
-import com.wrapper.spotify.model_objects.specification.Paging;
 import com.wrapper.spotify.model_objects.specification.Track;
-import com.wrapper.spotify.requests.data.search.simplified.SearchTracksRequest;
 import com.wrapper.spotify.requests.data.tracks.GetTrackRequest;
 import org.apache.hc.core5.http.ParseException;
 
