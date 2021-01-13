@@ -1,8 +1,6 @@
 package com.bartdebont.spotifyclone.service;
 
 import com.bartdebont.spotifyclone.exception.ResourceNotFoundException;
-import com.bartdebont.spotifyclone.model.Album;
-import com.bartdebont.spotifyclone.model.Artist;
 import com.bartdebont.spotifyclone.model.Song;
 import com.bartdebont.spotifyclone.repository.SongRepository;
 import com.bartdebont.spotifyclone.spotify.SearchTracksExample;
@@ -62,8 +60,7 @@ public class SongService {
     }
 
     public boolean doesSongHaveYoutubeId(String youtubeId) {
-        if (songRepository.findByYoutubeId(youtubeId) == null) return false;
-        return true;
+        return !(songRepository.findByYoutubeId(youtubeId) == null);
     }
 
     public Song hasSongBeenSaved(String spotifyId) {

@@ -5,7 +5,6 @@ import com.bartdebont.spotifyclone.model.Customer;
 import com.bartdebont.spotifyclone.model.Playlist;
 import com.bartdebont.spotifyclone.model.Song;
 import com.bartdebont.spotifyclone.repository.PlaylistRepository;
-import com.bartdebont.spotifyclone.util.YoutubeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -21,16 +21,14 @@ public class CustomerService implements UserDetailsService {
 
     private final CustomerRepository customerRepository;
     private final JwtUtil jwtUtil;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public CustomerService(CustomerRepository customerRepository, JwtUtil jwtUtil) {
         this.customerRepository = customerRepository;
         this.jwtUtil = jwtUtil;
     }
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
 
     public Customer registerNewCustomer(RegisterRequest registerRequest) throws Exception {
         if (!isValidEmail(registerRequest.getEmail())){

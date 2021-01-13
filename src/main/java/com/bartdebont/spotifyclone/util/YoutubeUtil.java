@@ -1,11 +1,7 @@
 package com.bartdebont.spotifyclone.util;
 
-import com.bartdebont.spotifyclone.SpotifyCloneApplication;
-import com.bartdebont.spotifyclone.spotify.ClientCredentialsSpotify;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.boot.SpringApplication;
 
 import java.io.IOException;
 import java.net.URI;
@@ -13,7 +9,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.text.MessageFormat;
-import java.util.Map;
 
 public class YoutubeUtil {
     private static final String API_KEY = "AIzaSyAs14FzwXYnfSjKt6J2wmGAL4g22CgTUtc";

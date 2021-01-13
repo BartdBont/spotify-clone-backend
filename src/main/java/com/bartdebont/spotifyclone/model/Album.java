@@ -1,10 +1,8 @@
 package com.bartdebont.spotifyclone.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.io.File;
 import java.util.List;
 
 @Entity

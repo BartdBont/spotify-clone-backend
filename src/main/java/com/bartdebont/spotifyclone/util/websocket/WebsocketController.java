@@ -23,8 +23,6 @@ import java.text.MessageFormat;
 @RestController
 public class WebsocketController {
 
-    private PlaylistService playlistService;
-
     private CustomerService customerService;
 
     private JwtUtil jwtUtil;
@@ -33,8 +31,7 @@ public class WebsocketController {
     private SimpMessagingTemplate sendingOperations;
 
     @Autowired
-    public WebsocketController(PlaylistService playlistService, CustomerService customerService, JwtUtil jwtUtil) {
-        this.playlistService = playlistService;
+    public WebsocketController(CustomerService customerService, JwtUtil jwtUtil) {
         this.customerService = customerService;
         this.jwtUtil = jwtUtil;
     }
