@@ -60,7 +60,7 @@ public class SongService {
     }
 
     public boolean doesSongHaveYoutubeId(String youtubeId) {
-        return !(songRepository.findByYoutubeId(youtubeId) == null);
+        return songRepository.findByYoutubeId(youtubeId) != null;
     }
 
     public Song hasSongBeenSaved(String spotifyId) {
