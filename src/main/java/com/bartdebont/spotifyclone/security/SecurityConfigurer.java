@@ -30,8 +30,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
             "/v2/api-docs",
             "/webjars/**",
             "/*/*/*/authenticate",
-            "/*/*/register",
-            "/swagger-ui/*"
+            "/*/*/*/register",
+            "/swagger-ui/*",
+            "/ws/info",
+            "/ws/**"
     };
 
 

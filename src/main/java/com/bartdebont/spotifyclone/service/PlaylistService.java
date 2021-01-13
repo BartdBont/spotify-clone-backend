@@ -1,6 +1,7 @@
 package com.bartdebont.spotifyclone.service;
 
 import com.bartdebont.spotifyclone.exception.ResourceNotFoundException;
+import com.bartdebont.spotifyclone.model.Customer;
 import com.bartdebont.spotifyclone.model.Playlist;
 import com.bartdebont.spotifyclone.model.Song;
 import com.bartdebont.spotifyclone.repository.PlaylistRepository;
@@ -37,10 +38,10 @@ public class PlaylistService {
                 new ResourceNotFoundException(String.format("Playlist with id: %o could not be found", id)));
     }
 
-    public List<Playlist> getPlaylists() {
+    public List<Playlist> getPlaylists(Customer owner) {
         List<Playlist> playlists = new ArrayList<>();
         for (Playlist playlist:
-             playlistRepository.findAll()) {
+             playlistRepository.findAllByOwner(owner)) {
             playlists.add(playlist);
         }
         return playlists;
@@ -97,7 +98,7 @@ public class PlaylistService {
         return newSong;
     }
 
-    public Boolean deleteSongFromPlaylist(Long playlistId, Song song) {
+    public Boolean deleteSongFromPlaylist(Long playlistId, String spotifyId) {
         Playlist playlist = getPlaylist(playlistId);
 
         //splits the lists into two
@@ -107,8 +108,8 @@ public class PlaylistService {
         playlist.setSongs(null);
 
         //deletes song from playlists where spotifyId matches
-        if (songsWithSpotifyId.stream().filter(o -> o.getSpotifyId().equals(song.getSpotifyId())).findFirst().isPresent()){
-            songsWithSpotifyId.removeIf(o -> o.getSpotifyId().equals(song.getSpotifyId()));
+        if (songsWithSpotifyId.stream().filter(o -> o.getSpotifyId().equals(spotifyId)).findFirst().isPresent()){
+            songsWithSpotifyId.removeIf(o -> o.getSpotifyId().equals(spotifyId));
 
             //merges the 2 lists back into 1 and saves
             playlist.setSongs(Stream.concat(songsWithoutSpotifyId.stream(), songsWithSpotifyId.stream()).collect(Collectors.toList()));
@@ -116,5 +117,22 @@ public class PlaylistService {
             return true;
         }
         return false;
+    }
+
+    public Boolean delSongFromPlaylist(Long playlistId, Long songId) {
+        Playlist playlist = getPlaylist(playlistId);
+
+        List<Song> newSongs = new ArrayList<>();
+
+        for (Song s :
+                playlist.getSongs()) {
+            if (!s.getId().equals(songId)) {
+                newSongs.add(s);
+
+            }
+        }
+        playlist.setSongs(newSongs);
+        playlistRepository.save(playlist);
+        return true;
     }
 }

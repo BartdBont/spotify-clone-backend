@@ -1,5 +1,6 @@
 package com.bartdebont.spotifyclone.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +26,7 @@ public class Customer implements UserDetails {
     private File image;
 
     @OneToMany(mappedBy = "owner", orphanRemoval = true)
+    @JsonBackReference
     private List<Playlist> playlists;
 
     public Customer(String username, String email, String password, File image, List<Playlist> playlists) {

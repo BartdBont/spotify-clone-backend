@@ -57,11 +57,7 @@ public class CustomerController {
 
     @GetMapping()
     public ResponseEntity<?> getUser(HttpServletRequest req) throws Exception {
-        String token = req.getHeader("Authorization");
-        token = token.substring(7);
-        System.out.println(token);
-        String username = jwtUtil.extractUsername(token);
-        Customer user = customerService.loadUserByUsername(username);
+        Customer user = customerService.getUserFromHttp(req);
         return ResponseEntity.ok(user);
     }
 }

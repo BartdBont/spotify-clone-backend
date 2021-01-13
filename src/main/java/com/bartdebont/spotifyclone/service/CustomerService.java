@@ -4,12 +4,14 @@ import com.bartdebont.spotifyclone.exception.EmailExistsException;
 import com.bartdebont.spotifyclone.model.Customer;
 import com.bartdebont.spotifyclone.model.request.RegisterRequest;
 import com.bartdebont.spotifyclone.repository.CustomerRepository;
+import com.bartdebont.spotifyclone.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,14 +20,16 @@ import java.util.regex.Pattern;
 public class CustomerService implements UserDetailsService {
 
     private final CustomerRepository customerRepository;
+    private final JwtUtil jwtUtil;
+
+    @Autowired
+    public CustomerService(CustomerRepository customerRepository, JwtUtil jwtUtil) {
+        this.customerRepository = customerRepository;
+        this.jwtUtil = jwtUtil;
+    }
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public CustomerService(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
 
 
     public Customer registerNewCustomer(RegisterRequest registerRequest) throws Exception {
@@ -68,5 +72,14 @@ public class CustomerService implements UserDetailsService {
 
     private Customer getUserByName(String s) {
         return customerRepository.findByUsername(s);
+    }
+
+    public Customer getUserFromHttp(HttpServletRequest req) {
+        String token = req.getHeader("Authorization");
+        token = token.substring(7);
+        System.out.println(token);
+        String username = jwtUtil.extractUsername(token);
+        Customer user = loadUserByUsername(username);
+        return user;
     }
 }
