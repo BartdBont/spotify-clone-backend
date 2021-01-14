@@ -19,7 +19,7 @@ public class SongService {
     private final SongRepository songRepository;
 
     @Autowired
-    public SongService(SongRepository songRepository, SearchTracksExample searchTracksExample) {
+    public SongService(SongRepository songRepository) {
         this.songRepository = songRepository;
     }
 
