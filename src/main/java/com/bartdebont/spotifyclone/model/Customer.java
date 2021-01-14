@@ -1,17 +1,22 @@
 package com.bartdebont.spotifyclone.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
-public class Customer {
+public class Customer implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String display_name;
+    private String username;
 
     private String email;
 
@@ -20,10 +25,11 @@ public class Customer {
     private File image;
 
     @OneToMany(mappedBy = "owner", orphanRemoval = true)
+    @JsonBackReference
     private List<Playlist> playlists;
 
-    public Customer(String display_name, String email, String password, File image, List<Playlist> playlists) {
-        this.display_name = display_name;
+    public Customer(String username, String email, String password, File image, List<Playlist> playlists) {
+        this.username = username;
         this.email = email;
         this.password = password;
         this.image = image;
@@ -37,16 +43,33 @@ public class Customer {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public String getUsername() {
+        return username;
     }
 
-    public String getDisplay_name() {
-        return display_name;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public void setDisplay_name(String display_name) {
-        this.display_name = display_name;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -55,6 +78,11 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
     public String getPassword() {
@@ -80,5 +108,7 @@ public class Customer {
     public void setPlaylists(List<Playlist> playlists) {
         this.playlists = playlists;
     }
+
+
 }
 

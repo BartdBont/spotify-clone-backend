@@ -1,8 +1,6 @@
 package com.bartdebont.spotifyclone.model;
 
 import javax.persistence.*;
-import java.io.File;
-import java.util.List;
 
 @Entity
 public class Artist {
@@ -13,11 +11,12 @@ public class Artist {
 
     private String genre;
 
-    private File image;
+
+    private String image;
 
     private String name;
 
-    public Artist(String genre, File image, String name) {
+    public Artist(String genre, String image, String name) {
         this.genre = genre;
         this.image = image;
         this.name = name;
@@ -42,11 +41,11 @@ public class Artist {
         this.genre = genre;
     }
 
-    public File getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(File image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
