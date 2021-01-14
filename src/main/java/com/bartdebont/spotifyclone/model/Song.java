@@ -16,7 +16,6 @@ public class Song {
     private String isrc;
     private String youtubeId;
 
-    private Integer durationms;
     private String previewUrl;
 
     @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
@@ -28,9 +27,8 @@ public class Song {
     public Song() {
     }
 
-    public Song(String name, int duration_ms, String previewUrl, Album album, List<Artist> artists, String spotifyId, String isrc) {
+    public Song(String name, String previewUrl, Album album, List<Artist> artists, String spotifyId, String isrc) {
         this.name = name;
-        this.durationms = duration_ms;
         this.previewUrl = previewUrl;
         this.album = album;
         this.artists = artists;
@@ -38,12 +36,11 @@ public class Song {
         this.isrc = isrc;
     }
 
-    public Song(String name, String spotifyId, String isrc, String youtubeId, int duration_ms, String previewUrl, Album album, List<Artist> artists) {
+    public Song(String name, String spotifyId, String isrc, String youtubeId, String previewUrl, Album album, List<Artist> artists) {
         this.name = name;
         this.spotifyId = spotifyId;
         this.isrc = isrc;
         this.youtubeId = youtubeId;
-        this.durationms = duration_ms;
         this.previewUrl = previewUrl;
         this.album = album;
         this.artists = artists;
@@ -95,14 +92,6 @@ public class Song {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getDurationms() {
-        return durationms;
-    }
-
-    public void setDurationms(int durationms) {
-        this.durationms = durationms;
     }
 
     public Album getAlbum() {

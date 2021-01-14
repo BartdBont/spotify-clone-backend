@@ -1,6 +1,7 @@
 package com.bartdebont.spotifyclone.service;
 
 import com.bartdebont.spotifyclone.exception.ResourceNotFoundException;
+import com.bartdebont.spotifyclone.model.Album;
 import com.bartdebont.spotifyclone.model.Customer;
 import com.bartdebont.spotifyclone.model.Playlist;
 import com.bartdebont.spotifyclone.model.Song;
@@ -133,5 +134,8 @@ public class PlaylistService {
         playlist.setSongs(newSongs);
         playlistRepository.save(playlist);
         return true;
+    }
+
+    public List<Album> getRecentAlbums() {
     }
 }

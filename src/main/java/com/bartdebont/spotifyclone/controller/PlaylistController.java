@@ -1,6 +1,7 @@
 package com.bartdebont.spotifyclone.controller;
 
 import com.bartdebont.spotifyclone.exception.ResourceNotFoundException;
+import com.bartdebont.spotifyclone.model.Album;
 import com.bartdebont.spotifyclone.model.Customer;
 import com.bartdebont.spotifyclone.model.Playlist;
 import com.bartdebont.spotifyclone.model.Song;
@@ -55,6 +56,11 @@ public class PlaylistController {
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("albums")
+    public ResponseEntity<List<Album>> getRecentAlbums() {
+        return ResponseEntity.ok(playlistService.getRecentAlbums());
     }
 
     @PutMapping("playlists/{id}")

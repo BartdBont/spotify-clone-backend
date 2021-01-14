@@ -15,7 +15,7 @@ public class TrackToSongConverter {
 
     public static Song convertTrackToSong(Track track) {
         System.out.println(track.getId());
-        return new Song(track.getName(), track.getDurationMs(), track.getPreviewUrl(),
+        return new Song(track.getName(), track.getPreviewUrl(),
                 convertAlbumSimplifiedToAlbum(track.getAlbum()),
                 convertArtistsSimplifiedToArtists(track.getArtists()), track.getId(), track.getExternalIds().getExternalIds().get("isrc"));
     }
