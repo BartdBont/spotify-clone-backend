@@ -76,7 +76,6 @@ public class CustomerService implements UserDetailsService {
         token = token.substring(7);
         System.out.println(token);
         String username = jwtUtil.extractUsername(token);
-        Customer user = loadUserByUsername(username);
-        return user;
+        return loadUserByUsername(username);
     }
 }

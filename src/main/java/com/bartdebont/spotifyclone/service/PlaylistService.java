@@ -62,9 +62,7 @@ public class PlaylistService {
         playlist.setSongs(playlistDetails.getSongs());
         playlist.setVisible(playlistDetails.getVisible());
 
-        Playlist updatedPlaylist = playlistRepository.save(playlist);
-
-        return updatedPlaylist;
+        return playlistRepository.save(playlist);
     }
 
     public Playlist addSongToPlaylist(Long playlistId, Song song) {

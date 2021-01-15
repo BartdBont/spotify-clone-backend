@@ -32,9 +32,8 @@ public class SearchTracksExample {
 
     public static Artist getArtistById(String id) {
         try {
-            final Artist artist = spotifyApi.getArtist(id).build().execute();
 
-            return artist;
+            return spotifyApi.getArtist(id).build().execute();
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
             SpotifyTokenUtil.checkIfTokenExpired(e);
