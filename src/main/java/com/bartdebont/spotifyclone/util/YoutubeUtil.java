@@ -32,8 +32,7 @@ public class YoutubeUtil {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             JsonNode jsonNode = objectMapper.readTree(response.body());
-            String videoId = jsonNode.get("items").findValue("id").findValue("videoId").asText();
-            return videoId;
+            return jsonNode.get("items").findValue("id").findValue("videoId").asText();
         }
         catch (Throwable e){
             System.out.println(e.getMessage());
