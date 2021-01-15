@@ -76,6 +76,7 @@ public class PlaylistService {
         }
 
         Song newSong = hasSongBeenSavedBefore(song);
+        songService.addSong(newSong);
 
         currentSongs.add(newSong);
         playlist.setSongs(currentSongs);

@@ -7,6 +7,7 @@ import com.bartdebont.spotifyclone.spotify.SearchTracksExample;
 import com.bartdebont.spotifyclone.util.YoutubeUtil;
 import com.bartdebont.spotifyclone.util.converters.TrackToSongConverter;
 import com.wrapper.spotify.model_objects.specification.Track;
+import org.hibernate.NonUniqueResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,11 @@ public class SongService {
     }
 
     public Song addSong(Song song) {
-        return songRepository.save(song);
+        Song songFromDb = hasSongBeenSaved(song.getSpotifyId());
+        if (songFromDb == null)
+            return songRepository.save(song);
+        else
+            return song;
     }
 
     public Song saveSpotifySong(Track track) {
@@ -46,14 +51,26 @@ public class SongService {
     }
 
     public List<Song> getSongsByName(String name) {
+        Boolean alreadySaved = false;
         List<Song> songs = new ArrayList<>();
+        Iterable<Song> savedSongs = songRepository.findAll();
         Track[] result = SearchTracksExample.searchTracks_Sync(name);
         if (result != null) {
             for (Track track:
                     result) {
-                System.out.println(track.toString());
-                Song song = TrackToSongConverter.convertTrackToSong(track);
-                songs.add(song);
+                for (Song songFromDb:
+                     savedSongs) {
+                    if (songFromDb.getSpotifyId().equals(track.getId())){
+                        songs.add(songFromDb);
+                        alreadySaved = true;
+                        break;
+                    }
+                }
+                if (!alreadySaved) {
+                    Song song = TrackToSongConverter.convertTrackToSong(track);
+                    songs.add(song);
+                }
+                alreadySaved = false;
             }
         }
         return songs;
@@ -64,7 +81,12 @@ public class SongService {
     }
 
     public Song hasSongBeenSaved(String spotifyId) {
-        return songRepository.findBySpotifyId(spotifyId);
+        try {
+            return songRepository.findBySpotifyId(spotifyId);
+        } catch (NonUniqueResultException | javax.persistence.NonUniqueResultException e) {
+            return new Song();
+        }
+
     }
 
     public String getYoutubeId(Song song) {

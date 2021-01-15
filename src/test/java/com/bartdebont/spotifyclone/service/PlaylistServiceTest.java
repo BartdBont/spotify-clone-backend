@@ -138,7 +138,7 @@ public class PlaylistServiceTest {
     public void testAddSongToPlaylist() throws Exception {
         //setup
         List<Artist> artists = new ArrayList<>();
-        Song song = new Song("Rockstar", 1000, "", new Album(), artists, "", "");
+        Song song = new Song("Rockstar", "", new Album(), artists, "", "");
 
         //mocking
         when(playlistRepository.findById(1L)).thenReturn(java.util.Optional.of(playlist));

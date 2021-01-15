@@ -21,7 +21,6 @@ public class Album {
 
     private String release_date;
 
-
     @OneToMany(mappedBy = "album", orphanRemoval = true, cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Song> songs;
